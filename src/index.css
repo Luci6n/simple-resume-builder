@@ -10,6 +10,36 @@
   --color-deep-charcoal: #121212; /* dark mode previewbackground */
 }
 
+@layer components {
+  .section-header {
+    @apply text-3xl text-shadow-lg pb-2
+  }
+  .form-input {
+    @apply bg-white text-[#525865] rounded-sm border border-[#d1d1d1] text-[1em] leading-[1.45] outline-none px-[1.45em] p-1 transition-all duration-180 ease-out;
+    font: inherit;
+    box-shadow: inset 0px 1px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-input:hover {
+    box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.02);
+  }
+
+  .form-input:focus {
+    @apply text-[#4b515d] border-[#B8B6B6];
+    box-shadow:
+      inset 1px 2px 4px rgba(0, 0, 0, 0.01),
+      0px 0px 8px rgba(0, 0, 0, 0.2);
+  }
+
+    .form-label {
+    @apply grid grid-cols-2 gap-3 items-center;
+  }
+
+  .form-label-text {
+    @apply font-bold;
+  }
+}
+
 body {
   margin: 0;
 }

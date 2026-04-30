@@ -41,7 +41,7 @@ function App() {
             </button>
           </section>
         </section>
-        <section className={`flex ${isReverseToggled ? "flex-row-reverse" : "flex-row"} justify-center gap-30`}>
+        <section className={`flex ${isReverseToggled ? "flex-row-reverse" : "flex-row"} justify-center gap-50`}>
           <Creator />
           <Preview />
         </section>
