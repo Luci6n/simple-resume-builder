@@ -1,12 +1,22 @@
 import Creator from "./pages/Creator.tsx"
 import Preview from "./pages/Preview.tsx"
 import { useEffect, useState } from "react"
+import type { ResumeData } from "./types/common.ts";
+import { resumeData } from "./data/resumeData.ts";
 
 function App() {
+  const [inputData, setInputData] = useState<ResumeData>(() => {
+    const savedData = localStorage.getItem("resumeData");
+
+    if(savedData) {
+      return JSON.parse(savedData) as ResumeData;
+    }
+
+    return resumeData;
+  });
   const [isReverseToggled, setIsReverseToggled] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
-    console.log(savedTheme)
 
     if(savedTheme) {
       return savedTheme === "dark";
@@ -19,6 +29,10 @@ function App() {
     document.documentElement.classList.toggle("dark", isDarkMode);
   },[isDarkMode])
 
+  useEffect(() => {
+    localStorage.setItem("resumeData", JSON.stringify(inputData));
+  }, [inputData])
+  
   const toggleDarkMode = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
@@ -27,7 +41,7 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-soft-milk dark:bg-soft-black text-black dark:text-white">
+    <div className="flex flex-col items-center min-h-screen bg-soft-milk dark:bg-deep-charcoal text-black dark:text-white">
       <main className="flex flex-col gap-10 py-8">
         <section className="flex flex-col gap-5 text-center">
           <h1 className="text-5xl">Simple Resume Builder</h1>
@@ -41,9 +55,14 @@ function App() {
             </button>
           </section>
         </section>
-        <section className={`flex ${isReverseToggled ? "flex-row-reverse" : "flex-row"} justify-center gap-50`}>
-          <Creator />
-          <Preview />
+        <section className="grid grid-cols-2 gap-20 w-full max-w-350">
+          <div className={isReverseToggled ? "order-2" : "order-1"}>
+            <Creator inputData={inputData} setInputData={setInputData} />
+          </div>
+
+          <div className={isReverseToggled ? "order-1" : "order-2"}>
+            <Preview inputData={inputData} />
+          </div>
         </section>
       </main>
     </div>

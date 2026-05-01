@@ -1,4 +1,4 @@
-import type ResumeData from "../types/common"
+import type { ResumeData } from "../types/common"
 
 export const resumeData: ResumeData = {
     header: {
@@ -12,7 +12,7 @@ export const resumeData: ResumeData = {
         {
             companyName: "",
             employmentDuration: "",
-            description: []
+            description: [""]
         }
     ],
     education: [
@@ -27,7 +27,7 @@ export const resumeData: ResumeData = {
     projects: [
         {
             projectName: "",
-            description: []
+            description: [""]
         }
     ],
     skills: [

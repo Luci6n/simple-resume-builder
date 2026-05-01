@@ -1,3 +1,20 @@
+export type CreatorProps = {
+    inputData: ResumeData;
+    setInputData: React.Dispatch<React.SetStateAction<ResumeData>>;
+};
+
+export type PreviewProps = {
+    inputData: ResumeData;
+};
+
+export type ArraySection =
+    "experience"
+    | "education"
+    | "projects"
+    | "skills"
+    | "awardsCertification"
+    | "languages";
+
 interface ResumeHeader {
     name: string;
     email: string;
@@ -43,7 +60,7 @@ interface ResumeLanguage {
     proficiencyLevel: string;
 }
 
-export default interface ResumeData {
+export interface ResumeData {
     header: ResumeHeader;
     experience: ResumeExperience[];
     education: ResumeEducation[];
@@ -51,5 +68,5 @@ export default interface ResumeData {
     skills: ResumeSkill[];
     awardsCertification: ResumeAwardCertification[];
     extracurricularActivities?: ResumeExtracurricularActivity[];
-    languages?: ResumeLanguage[];
+    languages: ResumeLanguage[];
 }
