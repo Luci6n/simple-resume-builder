@@ -30,6 +30,35 @@
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
+  .creator-scroll-fade::before,
+  .creator-scroll-fade::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 1.25rem;
+    height: 4rem;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .creator-scroll-fade::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--color-soft-milk) 0%, rgba(245, 245, 245, 0.92) 28%, rgba(245, 245, 245, 0));
+  }
+
+  .creator-scroll-fade::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--color-soft-milk) 0%, rgba(245, 245, 245, 0.92) 28%, rgba(245, 245, 245, 0));
+  }
+
+  .dark .creator-scroll-fade::before {
+    background: linear-gradient(to bottom, var(--color-deep-charcoal) 0%, rgba(18, 18, 18, 0.92) 28%, rgba(18, 18, 18, 0));
+  }
+
+  .dark .creator-scroll-fade::after {
+    background: linear-gradient(to top, var(--color-deep-charcoal) 0%, rgba(18, 18, 18, 0.92) 28%, rgba(18, 18, 18, 0));
+  }
+
   .section-header {
     @apply text-3xl text-shadow-lg pb-2 text-soft-black dark:text-soft-milk;
   }

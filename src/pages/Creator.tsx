@@ -277,7 +277,8 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
     // };
 
     return (
-        <div className="max-h-300 flex flex-col divide-y gap-5 px-20 py-10 font-mono overflow-auto">
+        <div className="creator-scroll-fade relative">
+            <div className="max-h-280 flex flex-col divide-y gap-5 px-20 py-10 font-mono overflow-auto border-y border-current/5">
             <div className="pb-5">
                 <h1 className="section-header">Header</h1>
                 <div className="flex flex-col gap-3">
@@ -307,9 +308,10 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                 <h1 className="section-header">Summary (optional)</h1>
                 <label className="flex flex-col gap-2 text-soft-black dark:text-soft-milk text-sm">
                     <textarea
-                        className="form-input min-h-28 resize-y"
+                        className="form-input min-h-28 max-h-56 resize-y"
                         value={inputData.summary ?? ""}
                         onChange={handleSummaryChange}
+                        maxLength={350}
                     />
                 </label>
             </div>
@@ -660,6 +662,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                 >
                     Add Language
                 </button>
+            </div>
             </div>
         </div>
     )
