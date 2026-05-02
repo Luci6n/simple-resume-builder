@@ -306,7 +306,6 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             <div className="pb-5">
                 <h1 className="section-header">Summary (optional)</h1>
                 <label className="flex flex-col gap-2 text-soft-black dark:text-soft-milk text-sm">
-                    <span className="form-label-text">Professional Summary</span>
                     <textarea
                         className="form-input min-h-28 resize-y"
                         value={inputData.summary ?? ""}
@@ -376,7 +375,11 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                                 handleExperienceProjectsNestedArrayChange("experience", index, "description", descIndex, e.target.value)
                                             } 
                                         />
-                                        <button><TrashIcon size={32} /></button>
+                                        <button 
+                                            className="transition-colors hover:text-red-500 hover:-translate-y-0.5"
+                                        >
+                                            <TrashIcon size={32} />
+                                        </button>
                                     </li>
                                 ))}
                                 <li className="flex items-center gap-2">
@@ -578,11 +581,11 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             <div className="pb-5">
                 <h1 className="section-header">Awards & Certifications</h1>
                 {inputData.awardsCertification.map((awardCertification, index) => (
-                    <div key={index} className="awards flex flex-col gap-2 py-1">
-                        <label className="form-label">
-                            <span className="form-label-text">Award / Certification</span>
+                    <div key={index} className="flex flex-col gap-2 pb-3">
+                        <label className="flex items-center gap-2">
+                            <span className="shrink-0">{'\u2022'}</span>
                             <input
-                                className="form-input"
+                                className="form-input flex-1 min-w-0"
                                 type="text"
                                 value={awardCertification.awardCertificationTitle}
                                 onChange={(e) =>
@@ -602,11 +605,11 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             <div className="pb-5">
                 <h1 className="section-header">Extracurricular Activities (optional)</h1>
                 {inputData.extracurricularActivities?.map((activity, index) => (
-                    <div key={index} className="extracurricular flex flex-col gap-2 py-1">
-                        <label className="form-label">
-                            <span className="form-label-text">Activity</span>
+                    <div key={index} className="flex flex-col gap-2 pb-3">
+                        <label className="flex items-center gap-2">
+                            <span className="shrink-0">{'\u2022'}</span>
                             <input
-                                className="form-input"
+                                className="form-input flex-1 min-w-0"
                                 type="text"
                                 value={activity.activityName}
                                 onChange={(e) =>
@@ -617,7 +620,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                     </div>
                 ))}
                 <button
-                    className="creator-page-button mt-5"
+                    className="creator-page-button"
                     onClick={() => handleAddOptionalArrayItem("extracurricularActivities", createEmptyExtracurricularActivity())}
                 >
                     Add Extracurricular Activity
@@ -626,7 +629,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             <div className="pb-5">
                 <h1 className="section-header">Languages</h1>
                 {inputData.languages.map((language, index) => (
-                    <div key={index} className="languages flex flex-col gap-2 py-1">
+                    <div key={index} className="flex flex-col gap-2 py-3">
                         <label className="form-label">
                             <span className="form-label-text">Language</span>
                             <input

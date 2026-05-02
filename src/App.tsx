@@ -27,13 +27,14 @@ function App() {
   });
   const [isReverseToggled, setIsReverseToggled] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
+    // const savedTheme = localStorage.getItem("theme");
 
-    if(savedTheme) {
-      return savedTheme === "dark";
-    }
+    // if(savedTheme) {
+    //   return savedTheme === "dark";
+    // }
 
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    // return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return false; // force default as light mode for now
   })
 
   useEffect(() => {
