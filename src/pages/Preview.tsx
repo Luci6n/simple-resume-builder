@@ -1,145 +1,113 @@
-import { useState } from "react";
-import DatePicker from "react-datepicker";
-import type {ResumeData, PreviewProps} from "../types/common";
-import "react-datepicker/dist/react-datepicker.css";
+import type { PreviewProps } from "../types/common";
 
 export default function Preview({ inputData }: PreviewProps) {
-    const [savedData, setSavedData] = useState<ResumeData>();
+    const formatMonthYear = (value: string) => {
+        if (!value) return "";
 
-    const handleHeaderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        console.log(name, value)
-        setInputData(prev => ({
-            ...prev,
-            header:{
-                ...prev?.header,
-                [name]: value
-            }
-        }))
-    }
+        const [year, month] = value.split("-");
+        const date = new Date(Number(year), Number(month) - 1);
+
+        return date.toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric"
+        });
+    };
 
     return (
-        <div className="flex flex-col gap-5 px-20 py-5 border-2">
-            <h1 className="section-header">Header Preview</h1>
-            <div className="flex flex-col gap-2">
-                <label className="form-label">
-                    <span className="form-label-text">Name</span>
-                    <input className="form-input" name="name" type="text" value={inputData.header.name} onChange={handleHeaderChange}/>
-                </label>
-                <label className="form-label">
-                    <span className="form-label-text">Email</span>
-                    <input className="form-input" name="email" type="email" value={inputData.header.email} onChange={handleHeaderChange}/>
-                </label>
-                <label className="form-label">
-                    <span className="form-label-text">Phone Number</span>
-                    <input className="form-input" name="phoneNumber" type="text" value={inputData.header.phoneNumber} onChange={handleHeaderChange}/>
-                </label>
-                <label className="form-label">
-                    <span className="form-label-text">Location</span>
-                    <input className="form-input" name="location" type="text" value={inputData.header.location} onChange={handleHeaderChange}/>
-                </label>
-                <label className="form-label">
-                    <span className="form-label-text">LinkedIn Profile (optional)</span>
-                    <input className="form-input" name="linkedin" type="text" value={inputData.header.linkedin} onChange={handleHeaderChange}/>
-                </label>
+        <>
+            <h1 className="section-header">Resume Preview</h1>
+            <div className="resume-page flex flex-col gap-5 border border-current/20 rounded-md shadow-lg/50">
+                <div className="flex flex-col">
+                    <span className="form-label-text text-center text-[19px]">{inputData.header.name}</span>
+                    <div className="flex flex-row divide-x justify-center">
+                        <span className="pr-1 text-[15px]">{inputData.header.email}</span>
+                        <span className="px-1 text-[15px]">{inputData.header.phoneNumber}</span>
+                        <span className="px-1 text-[15px]">{inputData.header.location}</span>
+                        <span className="pl-1 text-[15px]">{inputData.header.linkedin ?? undefined}</span>
+                    </div>
+                </div>
+                <div className="flex flex-col">
+                    <h1 className="text-base font-bold border-b uppercase">Summary</h1>
+                    <p className="text-[15px] text-justify">{inputData.summary}</p>
+                </div>
+                <div className="experience flex flex-col">
+                    <h1 className="text-base font-bold border-b uppercase">Experience</h1>
+                    {inputData.experience.map((experience, index) => (
+                        <div key={index}>
+                            <div className="flex justify-between">
+                                <span className="font-bold text-[15px]">{experience.companyName}</span>
+                                <span className="text-[15px]">{experience.companyLocation}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-[15px]">{experience.positionTitle}</span>
+                                <span className="text-[15px]">{formatMonthYear(experience.employmentDuration)}</span>
+                            </div>
+                            <ul>
+                                {experience.description.map((description, descIndex) => (
+                                    <li key={descIndex}>{'\u2022'} {description}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+                <div className="education flex flex-col">
+                    <h1 className="text-base font-bold border-b uppercase">Education</h1>
+                    {inputData.education.map((education, index) => (
+                        <div key={index}>
+                            <div className="flex justify-between">
+                                <span className="font-bold text-[15px]">{education.institutionName} - {education.courseOfStudy}</span>
+                                <span className="text-[15px]">{formatMonthYear(education.graduationDate)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-[15px]">{education.location}</span>
+                                <span className="text-[15px]">CGPA: {education.cgpa}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className="projects flex flex-col gap-1">
+                    <h1 className="text-base font-bold border-b uppercase">Projects</h1>
+                    <label className="flex flex-row gap-2">
+                        <span>Project Title</span>
+                        <input type="text" />
+                    </label>
+                    <span>Description</span>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <div className="skills flex flex-col gap-1">
+                    <h1 className="text-base font-bold border-b uppercase">Technical Skills</h1>
+                    <label className="flex flex-row gap-2">
+                        <span>Skill Category</span>
+                    </label>
+                    <span>Skill</span>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <div className="awards flex flex-col gap-1">
+                    <h1 className="text-base font-bold border-b uppercase">Awards & Certifications</h1>
+                    <label className="flex flex-row gap-2">
+                        <span>Awards / Certification</span>
+                    </label>
+                </div>
+                <div className="extracurricular flex flex-col gap-1">
+                    <h1 className="text-base font-bold border-b uppercase">Extracurricular Activities (optional)</h1>
+                </div>
+                <div className="languages flex flex-col gap-1">
+                    <h1 className="text-base font-bold border-b uppercase">Languages</h1>
+                    <label className="flex flex-row gap-2">
+                        <span>Select Language</span>
+                        <select name="language" id="language">
+                            <option value="english">English</option>
+                            <option value="spanish">Chinese</option>
+                            <option value="malay">Malay</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </label>
+                </div>
             </div>
-            <hr />
-            <div className="experience flex flex-col gap-1">
-                <h1 className="section-header">Experience</h1>
-                <label className="flex flex-row gap-2">
-                    <span>Company Name</span>
-                    <input type="text" />
-                </label>
-                <label className="flex flex-row gap-2">
-                    <span>Employment duration</span>
-                    <input type="month" />
-                </label>
-                <span>Description</span>
-                <ul>
-                    <li>{'\u2022'}<input type="text"/></li>
-                </ul>
-                <button className="border-2 shadow-amber-200 inset-shadow-zinc-900">Add Company</button>
-            </div>
-            <hr />
-            <div className="education flex flex-col gap-1">
-                <h1 className="section-header">Education</h1>
-                <label className="flex flex-row gap-2">
-                    <span>Institution Name</span>
-                    <input type="text" />
-                </label>
-                <label className="flex flex-row gap-2">
-                    <span>Location</span>
-                    <input type="month" />
-                </label>
-                <label className="flex flex-row gap-2">
-                    <span>Course of Study</span>
-                    <input type="month" />
-                </label>
-                <label className="flex flex-row gap-2">
-                    <span>CGPA</span>
-                    <input type="month" />
-                </label>
-                <label className="flex flex-row gap-2">
-                    <span>Study duration</span>
-                    <input type="month" />
-                </label>
-                <button>Add Education</button>
-            </div>
-            <hr />
-            <div className="projects flex flex-col gap-1">
-                <h1 className="section-header">Projects</h1>
-                <label className="flex flex-row gap-2">
-                    <span>Project Title</span>
-                    <input type="text" />
-                </label>
-                <span>Description</span>
-                <ul>
-                    <li><input type="text"/></li>
-                </ul>
-                <button onClick={() => console.log('add porject')}>Add Project</button>
-            </div>
-            <hr />
-            <div className="skills flex flex-col gap-1">
-                <h1 className="section-header">Technical Skills</h1>
-                <label className="flex flex-row gap-2">
-                    <span>Skill Category</span>
-                    <input type="text" />
-                </label>
-                <span>Skill</span>
-                <ul>
-                    <li><input type="text"/></li>
-                </ul>
-                <button onClick={() => console.log('add skill')}>Add Skill</button>
-                <button onClick={() => console.log('add skill category')}>Add Skill Category</button>
-            </div>
-            <hr />
-            <div className="awards flex flex-col gap-1">
-                <h1 className="section-header">Awards & Certifications</h1>
-                <label className="flex flex-row gap-2">
-                    <span>Awards / Certification</span>
-                    <input type="text" />
-                </label>
-                <button onClick={() => console.log('add award/certification')}>Add Award/Certification</button>
-            </div>
-            <hr />
-            <div className="extracurricular flex flex-col gap-1">
-                <h1 className="section-header">Extracurricular Activities (optional)</h1>
-                <input type="text" placeholder="Enter extracurricular activities"/>
-                <button onClick={() => console.log('add extracurricular activity')}>Add Extracurricular Activity</button>
-            </div>
-            <hr />
-            <div className="languages flex flex-col gap-1">
-                <h1 className="section-header">Languages</h1>
-                <label className="flex flex-row gap-2">
-                    <span>Select Language</span>
-                    <select name="language" id="language">
-                        <option value="english">English</option>
-                        <option value="spanish">Chinese</option>
-                        <option value="malay">Malay</option>
-                        <option value="other">Other</option>
-                    </select>
-                </label>
-            </div>
-        </div>
+        </>
     )
 }

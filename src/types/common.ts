@@ -25,6 +25,8 @@ interface ResumeHeader {
 
 interface ResumeExperience {
     companyName: string;
+    companyLocation: string;
+    positionTitle: string;
     employmentDuration: string;
     description: string[];
 }
@@ -62,6 +64,7 @@ interface ResumeLanguage {
 
 export interface ResumeData {
     header: ResumeHeader;
+    summary?: string;
     experience: ResumeExperience[];
     education: ResumeEducation[];
     projects: ResumeProject[];

@@ -11,11 +11,30 @@
 }
 
 @layer components {
+  .resume-page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 1.35cm 1.55cm 1.42cm 1.55cm;
+    box-sizing: border-box;
+  }
+
+  .creator-page-button {
+    @apply w-full my-2 p-1 border border-current/5 hover:border-current/50 active:border-0 rounded-sm shadow-md shadow-black/30 active:shadow-none transition-transform duration-75 hover:scale-[1.02] active:scale-[0.99];
+  }
+
+  .creator-page-button:active {
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .creator-page-button:focus-visible {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
   .section-header {
     @apply text-3xl text-shadow-lg pb-2 text-soft-black dark:text-soft-milk;
   }
   .form-input {
-    @apply bg-white dark:bg-soft-black text-[#525865] dark:text-soft-milk rounded-sm border border-[#d1d1d1] dark:border-[#3a3a3a] text-[1em] leading-[1.45] outline-none p-1 px-3 transition-all duration-180 ease-out;
+    @apply bg-white dark:bg-soft-black text-[#525865] dark:text-soft-milk rounded-sm border border-[#d1d1d1] dark:border-[#3a3a3a] text-[1em] leading-[1.45] outline-none p-1 px-3 transition-[box-shadow,border-color] duration-180 ease-out;
     font: inherit;
     box-shadow: inset 0px 1px 8px rgba(0, 0, 0, 0.2);
   }
