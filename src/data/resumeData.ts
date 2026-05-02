@@ -93,11 +93,11 @@ export const resumeData: ResumeData = {
     languages: [
         {
             languageName: "English",
-            proficiencyLevel: "Professional working proficiency"
+            proficiencyLevel: "Fluent"
         },
         {
             languageName: "Malay",
-            proficiencyLevel: "Native or bilingual proficiency"
+            proficiencyLevel: "Native"
         }
     ]
 }

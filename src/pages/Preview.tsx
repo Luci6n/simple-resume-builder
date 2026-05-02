@@ -44,7 +44,7 @@ export default function Preview({ inputData }: PreviewProps) {
                             </div>
                             <ul>
                                 {experience.description.map((description, descIndex) => (
-                                    <li key={descIndex}>{'\u2022'} {description}</li>
+                                    <li key={descIndex} className="text-[15px]">{'\u2022'} {description}</li>
                                 ))}
                             </ul>
                         </div>
@@ -55,57 +55,60 @@ export default function Preview({ inputData }: PreviewProps) {
                     {inputData.education.map((education, index) => (
                         <div key={index}>
                             <div className="flex justify-between">
-                                <span className="font-bold text-[15px]">{education.institutionName} - {education.courseOfStudy}</span>
-                                <span className="text-[15px]">{formatMonthYear(education.graduationDate)}</span>
+                                <span className="font-bold text-[15px]">{education.institutionName}</span>
                             </div>
-                            <div className="flex justify-between">
-                                <span className="text-[15px]">{education.location}</span>
-                                <span className="text-[15px]">CGPA: {education.cgpa}</span>
+                            <div className="flex justify-between ">
+                                <div className="flex gap-1">
+                                    <span className="text-[15px]">{education.courseOfStudy};</span>
+                                    <span className="font-bold text-[15px]">CGPA:{education.cgpa}</span>
+                                </div>
+                                <span className="text-[15px]">{formatMonthYear(education.graduationDate)}</span>
                             </div>
                         </div>
                     ))}
                 </div>
-                <div className="projects flex flex-col gap-1">
+                <div className="projects flex flex-col">
                     <h1 className="text-base font-bold border-b uppercase">Projects</h1>
-                    <label className="flex flex-row gap-2">
-                        <span>Project Title</span>
-                        <input type="text" />
-                    </label>
-                    <span>Description</span>
-                    <ul>
-                        <li></li>
-                    </ul>
+                    {inputData.projects.map((project, index) => (
+                        <div key={index}>
+                            <span className="font-bold text-[15px]">{project.projectName}</span>
+                            <ul>
+                                {project.description.map((description, descIndex) => (
+                                    <li key={descIndex} className="text-[15px]">{'\u2022'} {description}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
                 </div>
-                <div className="skills flex flex-col gap-1">
+                <div className="skills flex flex-col">
                     <h1 className="text-base font-bold border-b uppercase">Technical Skills</h1>
-                    <label className="flex flex-row gap-2">
-                        <span>Skill Category</span>
-                    </label>
-                    <span>Skill</span>
-                    <ul>
-                        <li></li>
-                    </ul>
+                    {inputData.skills.map((skill, index) => (
+                        <div key={index} className="flex gap-1">
+                            <span className="font-bold text-[15px]">{skill.skillCategory}:</span>
+                            <span className="text-[15px]">{skill.skillName.join(", ")}</span>
+                        </div>
+                    ))}
                 </div>
-                <div className="awards flex flex-col gap-1">
+                <div className="awards flex flex-col">
                     <h1 className="text-base font-bold border-b uppercase">Awards & Certifications</h1>
-                    <label className="flex flex-row gap-2">
-                        <span>Awards / Certification</span>
-                    </label>
+                    {inputData.awardsCertification.map((award, index) => (
+                        <span key={index} className="text-[15px]">{'\u2022'} {award.awardCertificationTitle}</span>
+                    ))}
                 </div>
-                <div className="extracurricular flex flex-col gap-1">
+                <div className="extracurricular flex flex-col">
                     <h1 className="text-base font-bold border-b uppercase">Extracurricular Activities (optional)</h1>
+                    {inputData.extracurricularActivities?.map((activity, index) => (
+                        <span key={index} className="text-[15px]">{'\u2022'} {activity.activityName}</span>
+                    ))}
                 </div>
-                <div className="languages flex flex-col gap-1">
+                <div className="languages flex flex-col">
                     <h1 className="text-base font-bold border-b uppercase">Languages</h1>
-                    <label className="flex flex-row gap-2">
-                        <span>Select Language</span>
-                        <select name="language" id="language">
-                            <option value="english">English</option>
-                            <option value="spanish">Chinese</option>
-                            <option value="malay">Malay</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </label>
+                    {inputData.languages.map((language, index) => (
+                        <div key={index} className="flex gap-1">
+                            <span className="font-bold text-[15px]">{language.languageName}:</span>
+                            <span className="text-[15px]">{language.proficiencyLevel}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
         </>
