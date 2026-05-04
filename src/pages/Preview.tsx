@@ -40,7 +40,7 @@ export default function Preview({ inputData }: PreviewProps) {
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-[15px]">{experience.positionTitle}</span>
-                                <span className="text-[15px]">{formatMonthYear(experience.employmentDuration.startDate) + " - " + formatMonthYear(experience.employmentDuration.endDate)}</span>
+                                <span className="text-[15px]">{formatMonthYear(experience.employmentDuration.startDate) + " - "} {experience.employmentDuration.isCurrent ? "Present" : formatMonthYear(experience.employmentDuration.endDate)}</span>
                             </div>
                             <ul className="list-disc list-outside pl-5">
                                 {experience.description.map((description, descIndex) => (
@@ -62,7 +62,7 @@ export default function Preview({ inputData }: PreviewProps) {
                                     <span className="text-[15px]">{education.courseOfStudy};</span>
                                     <span className="font-bold text-[15px]">CGPA:{education.cgpa}</span>
                                 </div>
-                                <span className="text-[15px]">{formatMonthYear(education.graduationDate.startDate) + " - " + formatMonthYear(education.graduationDate.endDate)}</span>
+                                <span className="text-[15px]">{formatMonthYear(education.graduationDate.startDate) + " - "} {education.graduationDate.isCurrent ? "Present" : formatMonthYear(education.graduationDate.endDate)}</span>
                             </div>
                         </div>
                     ))}

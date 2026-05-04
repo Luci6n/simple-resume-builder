@@ -363,29 +363,29 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
 
     return (
         <div className="creator-scroll-fade relative">
-            <div className="max-h-280 flex flex-col divide-y gap-5 px-20 py-10 font-mono overflow-auto border-y border-current/5">
+            <div className="max-h-280 flex flex-col divide-y gap-5 px-15 py-10 font-mono overflow-auto border-y border-current/5">
             <div className="pb-5">
                 <h1 className="section-header">Header</h1>
                 <div className="flex flex-col gap-3">
                     <label className="form-label">
                         <span className="form-label-text">Name</span>
-                        <input className="form-input" name="name" type="text" autoComplete="on" value={inputData.header.name} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="name" type="text" autoComplete="on" placeholder="e.g. Tan Ah Kao" value={inputData.header.name} onChange={handleHeaderChange}/>
                     </label>
                     <label className="form-label">
                         <span className="form-label-text">Email</span>
-                        <input className="form-input" name="email" type="email" autoComplete="on" value={inputData.header.email} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="email" type="email" autoComplete="on" placeholder="e.g. ahkao67@gmail.com" value={inputData.header.email} onChange={handleHeaderChange}/>
                     </label>
                     <label className="form-label">
                         <span className="form-label-text">Phone Number</span>
-                        <input className="form-input" name="phoneNumber" id="tel" autoComplete="on" type="text" value={inputData.header.phoneNumber} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="phoneNumber" id="tel" autoComplete="on" type="text" placeholder="e.g. +60123456789" value={inputData.header.phoneNumber} onChange={handleHeaderChange}/>
                     </label>
                     <label className="form-label">
                         <span className="form-label-text">Location</span>
-                        <input className="form-input" name="location" type="text" autoComplete="on" value={inputData.header.location} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="location" type="text" autoComplete="on" placeholder="e.g. Klang, Selangor" value={inputData.header.location} onChange={handleHeaderChange}/>
                     </label>
                     <label className="form-label">
                         <span className="form-label-text">LinkedIn Profile (optional)</span>
-                        <input className="form-input" name="linkedin" type="url" autoComplete="on" value={inputData.header.linkedin} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="linkedin" type="url" autoComplete="on" placeholder="e.g. linkedin.com/in/ahkaotan" value={inputData.header.linkedin} onChange={handleHeaderChange}/>
                     </label>
                 </div>
             </div>
@@ -397,6 +397,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                         value={inputData.summary ?? ""}
                         onChange={handleSummaryChange}
                         maxLength={350}
+                        placeholder="Max 350 characters."
                     />
                 </label>
             </div>
@@ -410,6 +411,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 className="form-input" 
                                 type="text" 
                                 value={experience.companyName}
+                                placeholder="e.g. Apple Inc."
                                 onChange={(e) =>
                                     handleSectionArrayChange("experience", index, "companyName", e.target.value)
                                 }
@@ -422,7 +424,8 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 type="text" 
                                 name="location"
                                 value={experience.companyLocation}
-                                autoComplete="on" 
+                                autoComplete="on"  
+                                placeholder="e.g. Klang, Selangor"
                                 onChange={(e) =>
                                     handleSectionArrayChange("experience", index, "companyLocation", e.target.value)
                                 }
@@ -434,6 +437,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 className="form-input" 
                                 type="text" 
                                 value={experience.positionTitle}
+                                placeholder="e.g. Software Developer"
                                 onChange={(e) =>
                                     handleSectionArrayChange("experience", index, "positionTitle", e.target.value)
                                 }
@@ -458,6 +462,17 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 value={experience.employmentDuration.endDate}
                                 onChange={(e) =>
                                     handleExperienceDurationChange(index, "endDate", e.target.value)
+                                } 
+                            />
+                        </label>
+                        <label className="form-label">
+                            <span className="form-label-text">Currently work here?</span>
+                            <input 
+                                className="" 
+                                type="checkbox"
+                                checked={experience.employmentDuration.isCurrent}
+                                onChange={(e) =>
+                                    handleExperienceDurationChange(index, "isCurrent", e.target.checked)
                                 } 
                             />
                         </label>
@@ -513,6 +528,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 className="form-input"
                                 type="text"
                                 value={education.institutionName}
+                                placeholder="e.g. Universiti Tak Ada Rehat"
                                 onChange={(e) =>
                                     handleSectionArrayChange("education", index, "institutionName", e.target.value)
                                 }
@@ -526,6 +542,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 name="location"
                                 value={education.location}
                                 autoComplete="on"
+                                placeholder="e.g. Klang, Selangor"
                                 onChange={(e) =>
                                     handleSectionArrayChange("education", index, "location", e.target.value)
                                 }
@@ -537,6 +554,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 className="form-input"
                                 type="text"
                                 value={education.courseOfStudy}
+                                placeholder="e.g. Bachelor of Computer Science"
                                 onChange={(e) =>
                                     handleSectionArrayChange("education", index, "courseOfStudy", e.target.value)
                                 }
@@ -551,6 +569,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 min="0"
                                 step="0.01"
                                 value={education.cgpa}
+                                placeholder="0.00 - 5.00"
                                 onChange={(e) =>
                                     handleSectionArrayChange("education", index, "cgpa", Number(e.target.value))
                                 }
@@ -584,7 +603,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                             : undefined
                         }
                         <label className="form-label">
-                            <span className="form-label-text">Still studying?</span>
+                            <span className="form-label-text">Currently study here?</span>
                             <input
                                 className=""
                                 type="checkbox"
@@ -665,6 +684,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 className="form-input"
                                 type="text"
                                 value={skill.skillCategory}
+                                placeholder="e.g. Programming Languages, Frameworks, Tools, etc."
                                 onChange={(e) =>
                                     handleSectionArrayChange("skills", index, "skillCategory", e.target.value)
                                 }
@@ -717,6 +737,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 className="form-input flex-1 min-w-0"
                                 type="text"
                                 value={awardCertification.awardCertificationTitle}
+                                placeholder="e.g. Google XXX Certificate (year)"
                                 onChange={(e) =>
                                     handleSectionArrayChange("awardsCertification", index, "awardCertificationTitle", e.target.value)
                                 }
@@ -741,6 +762,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 className="form-input flex-1 min-w-0"
                                 type="text"
                                 value={activity.activityName}
+                                placeholder="e.g. XX Committee of YY (year)"
                                 onChange={(e) =>
                                     handleSectionArrayChange("extracurricularActivities", index, "activityName", e.target.value)
                                 }
