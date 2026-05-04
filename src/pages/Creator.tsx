@@ -1,6 +1,5 @@
 import type { CreatorProps, ArraySection, ResumeData } from "../types/common";
-import { TrashIcon } from "@phosphor-icons/react/dist/csr/Trash";
-import "react-datepicker/dist/react-datepicker.css";
+// import { TrashIcon } from "@phosphor-icons/react/dist/csr/Trash";
 
 export default function Creator({ inputData, setInputData }: CreatorProps) {
     // handler functiion for updating information in header section
