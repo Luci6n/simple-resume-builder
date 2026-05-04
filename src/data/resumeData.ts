@@ -1,7 +1,7 @@
 import type { ResumeData } from "../types/common"
 
-// for testing purposes only
-export const resumeData: ResumeData = {
+// sample data
+export const sampleData: ResumeData = {
     header: {
         name: "Alex Tan",
         email: "alex.tan@example.com",
@@ -15,7 +15,11 @@ export const resumeData: ResumeData = {
             companyName: "BrightWorks Studio",
             companyLocation: "Kuala Lumpur, Malaysia",
             positionTitle: "Frontend Developer Intern",
-            employmentDuration: "2024-01",
+            employmentDuration: {
+                startDate:"2024-01", 
+                endDate: "2024-06", 
+                isCurrent: true
+            },
             description: [
                 "Built responsive React interfaces for client dashboards.",
                 "Improved form state handling and reduced repeated UI code."
@@ -25,7 +29,11 @@ export const resumeData: ResumeData = {
             companyName: "Campus Tech Club",
             companyLocation: "University of Malaya",
             positionTitle: "Event Coordinator",
-            employmentDuration: "2023-03",
+            employmentDuration: {
+                startDate:"2023-03", 
+                endDate: "2023-10", 
+                isCurrent: false
+            },           
             description: [
                 "Led weekly coding workshops for beginner web developers.",
                 "Maintained internal tools for event registration."
@@ -38,14 +46,22 @@ export const resumeData: ResumeData = {
             location: "Kuala Lumpur, Malaysia",
             courseOfStudy: "Bachelor of Computer Science",
             cgpa: 3.72,
-            graduationDate: "2026-07"
+            graduationDate: {
+                startDate:"2023-07", 
+                endDate: "2026-07", 
+                isCurrent: false
+            }, 
         },
         {
             institutionName: "Taylor's College",
             location: "Subang Jaya, Malaysia",
             courseOfStudy: "Foundation in Computing",
             cgpa: 3.85,
-            graduationDate: "2022-11"
+            graduationDate: {
+                startDate:"2021-11", 
+                endDate: "2022-11", 
+                isCurrent: true
+            }, 
         }
     ],
     projects: [
@@ -102,6 +118,7 @@ export const resumeData: ResumeData = {
     ]
 }
 
+// blank data
 export const blankData: ResumeData = {
     header: {
         name: "",
@@ -116,14 +133,22 @@ export const blankData: ResumeData = {
             companyName: "",
             companyLocation: "",
             positionTitle: "",
-            employmentDuration: "",
+            employmentDuration: {
+                startDate:"", 
+                endDate: "", 
+                isCurrent: false
+            }, 
             description: [""]
         },
         {
             companyName: "",
             companyLocation: "",
             positionTitle: "",
-            employmentDuration: "",
+            employmentDuration: {
+                startDate:"", 
+                endDate: "", 
+                isCurrent: false
+            },
             description: [""]
         }
     ],
@@ -133,14 +158,22 @@ export const blankData: ResumeData = {
             location: "",
             courseOfStudy: "",
             cgpa: 0,
-            graduationDate: ""
+            graduationDate: {
+                startDate:"", 
+                endDate: "", 
+                isCurrent: false
+            }
         },
         {
             institutionName: "",
             location: "",
             courseOfStudy: "",
             cgpa: 0,
-            graduationDate: ""
+            graduationDate: {
+                startDate:"", 
+                endDate: "", 
+                isCurrent: false
+            }
         }
     ],
     projects: [

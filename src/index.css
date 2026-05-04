@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: Arial, san-serif;
+  --font-sans: Arial, Helvetica, san-serif;
   --color-soft-milk: #F5F5F5; /* light mode background */
   --color-milk-white: #FEFCFF; /* light mode preview background */
   --color-soft-black: #1C1C1E; /* dark mode background */
@@ -12,6 +12,7 @@
 
 @layer components {
   .resume-page {
+    @apply flex flex-col gap-5 border border-current/20 rounded-md shadow-lg/50;
     width: 210mm;
     min-height: 297mm;
     padding: 1.35cm 1.55cm 1.42cm 1.55cm;
@@ -102,6 +103,39 @@
 
   .form-label-text {
     @apply font-bold text-soft-black dark:text-soft-milk;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .resume-print-area,
+  .resume-print-area * {
+    visibility: visible;
+  }
+
+  .resume-print-area {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 210mm;
+    min-height: 297mm;
+  }
+
+  .resume-print-area .section-header,
+  .resume-print-area button {
+    display: none;
+  }
+
+  .resume-print-area .resume-page {
+    box-shadow: none;
+    border: none;
   }
 }
 

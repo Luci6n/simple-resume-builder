@@ -8,7 +8,7 @@ export default function Preview({ inputData }: PreviewProps) {
         const date = new Date(Number(year), Number(month) - 1);
 
         return date.toLocaleDateString("en-US", {
-            month: "long",
+            month: "short",
             year: "numeric"
         });
     };
@@ -16,7 +16,7 @@ export default function Preview({ inputData }: PreviewProps) {
     return (
         <>
             <h1 className="section-header">Resume Preview</h1>
-            <div className="resume-page flex flex-col gap-5 border border-current/20 rounded-md shadow-lg/50">
+            <div className="resume-page">
                 <div className="flex flex-col">
                     <span className="form-label-text text-center text-[19px]">{inputData.header.name}</span>
                     <div className="flex flex-row divide-x justify-center">
@@ -40,11 +40,11 @@ export default function Preview({ inputData }: PreviewProps) {
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-[15px]">{experience.positionTitle}</span>
-                                <span className="text-[15px]">{formatMonthYear(experience.employmentDuration)}</span>
+                                <span className="text-[15px]">{formatMonthYear(experience.employmentDuration.startDate) + " - " + formatMonthYear(experience.employmentDuration.endDate)}</span>
                             </div>
-                            <ul>
+                            <ul className="list-disc list-outside pl-5">
                                 {experience.description.map((description, descIndex) => (
-                                    <li key={descIndex} className="text-[15px]">{'\u2022'} {description}</li>
+                                    <li key={descIndex} className="text-[15px]">{description}</li>
                                 ))}
                             </ul>
                         </div>
@@ -62,7 +62,7 @@ export default function Preview({ inputData }: PreviewProps) {
                                     <span className="text-[15px]">{education.courseOfStudy};</span>
                                     <span className="font-bold text-[15px]">CGPA:{education.cgpa}</span>
                                 </div>
-                                <span className="text-[15px]">{formatMonthYear(education.graduationDate)}</span>
+                                <span className="text-[15px]">{formatMonthYear(education.graduationDate.startDate) + " - " + formatMonthYear(education.graduationDate.endDate)}</span>
                             </div>
                         </div>
                     ))}
@@ -72,9 +72,9 @@ export default function Preview({ inputData }: PreviewProps) {
                     {inputData.projects.map((project, index) => (
                         <div key={index}>
                             <span className="font-bold text-[15px]">{project.projectName}</span>
-                            <ul>
+                            <ul className="list-disc list-outside pl-5">
                                 {project.description.map((description, descIndex) => (
-                                    <li key={descIndex} className="text-[15px]">{'\u2022'} {description}</li>
+                                    <li key={descIndex} className="text-[15px]">{description}</li>
                                 ))}
                             </ul>
                         </div>
@@ -91,15 +91,19 @@ export default function Preview({ inputData }: PreviewProps) {
                 </div>
                 <div className="awards flex flex-col">
                     <h1 className="text-base font-bold border-b uppercase">Awards & Certifications</h1>
-                    {inputData.awardsCertification.map((award, index) => (
-                        <span key={index} className="text-[15px]">{'\u2022'} {award.awardCertificationTitle}</span>
-                    ))}
+                    <ul className="list-disc list-outside pl-5">
+                        {inputData.awardsCertification.map((award, index) => (
+                            <li key={index} className="text-[15px]">{award.awardCertificationTitle}</li>
+                        ))}
+                    </ul>
                 </div>
                 <div className="extracurricular flex flex-col">
                     <h1 className="text-base font-bold border-b uppercase">Extracurricular Activities (optional)</h1>
-                    {inputData.extracurricularActivities?.map((activity, index) => (
-                        <span key={index} className="text-[15px]">{'\u2022'} {activity.activityName}</span>
-                    ))}
+                    <ul className="list-disc list-outside pl-5">
+                        {inputData.extracurricularActivities?.map((activity, index) => (
+                            <li key={index} className="text-[15px]">{activity.activityName}</li>
+                        ))}
+                    </ul>
                 </div>
                 <div className="languages flex flex-col">
                     <h1 className="text-base font-bold border-b uppercase">Languages</h1>

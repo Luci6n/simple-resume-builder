@@ -15,6 +15,12 @@ export type ArraySection =
     | "awardsCertification"
     | "languages";
 
+interface DateDuration {
+    startDate: string;
+    endDate: string;
+    isCurrent: boolean;
+}
+
 interface ResumeHeader {
     name: string;
     email: string;
@@ -27,7 +33,7 @@ interface ResumeExperience {
     companyName: string;
     companyLocation: string;
     positionTitle: string;
-    employmentDuration: string;
+    employmentDuration: DateDuration;
     description: string[];
 }
 
@@ -36,7 +42,7 @@ interface ResumeEducation {
     location: string;
     courseOfStudy: string;
     cgpa: number;
-    graduationDate: string;
+    graduationDate: DateDuration;
 }
 
 interface ResumeProject {

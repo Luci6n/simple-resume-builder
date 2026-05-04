@@ -1,6 +1,5 @@
 import type { CreatorProps, ArraySection, ResumeData } from "../types/common";
 import { TrashIcon } from "@phosphor-icons/react/dist/csr/Trash";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function Creator({ inputData, setInputData }: CreatorProps) {
@@ -91,6 +90,49 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
         }));
     };
 
+    const handleExperienceDurationChange = (
+        index: number,
+        dateField: "startDate" | "endDate" | "isCurrent",
+        value: string | boolean
+    ) => {
+        setInputData(prev => ({
+            ...prev,
+            experience: prev.experience.map((experience, i) =>
+                i === index
+                    ? {
+                        ...experience,
+                        employmentDuration: {
+                            ...experience.employmentDuration,
+                            [dateField]: value
+                        }
+                    }
+                    : experience
+            )
+        }));
+    };
+
+    const handleEducationDurationChange = (
+        index: number,
+        dateField: "startDate" | "endDate" | "isCurrent",
+        value: string | boolean 
+    ) => {
+        setInputData(prev => ({
+            ...prev,
+            education: prev.education.map((education, i) =>
+                i === index
+                    ? {
+                        ...education,
+                        graduationDate: {
+                            ...education.graduationDate,
+                            [dateField]: value
+                        }
+                    }
+                    : education
+            )
+        }))
+    }
+
+    
     // generic function to add new items to array sections 
     // (experience, education, projects, skills, awardsCertification, extracurricularActivities, languages)
     const handleAddArrayItem = <Section extends ArraySection>(
@@ -149,7 +191,11 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
         companyName: "",
         companyLocation: "",
         positionTitle: "",
-        employmentDuration: "",
+        employmentDuration: {
+            startDate:"", 
+            endDate: "", 
+            isCurrent: false
+        },
         description: []
     });
 
@@ -158,7 +204,11 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
         location: "",
         courseOfStudy: "",
         cgpa: 0,
-        graduationDate: ""
+        graduationDate: {
+            startDate:"", 
+            endDate: "", 
+            isCurrent: false
+        }
     });
 
     const createEmptyProject = (): ResumeData["projects"][number] => ({
@@ -275,6 +325,41 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
     //         })
     //     }));
     // };
+    // type DateDurationFieldMap = {
+    //     experience: "employmentDuration";
+    //     education: "graduationDate";
+    // };
+
+    // const handleDateDurationChange = <
+    //     Section extends keyof DateDurationFieldMap
+    // >(
+    //     section: Section,
+    //     index: number,
+    //     field: DateDurationFieldMap[Section],
+    //     dateField: "startDate" | "endDate" | "isCurrent",
+    //     value: string | boolean
+    // ) => {
+    //     setInputData(prev => ({
+    //         ...prev,
+    //         [section]: prev[section].map((item, i) => {
+    //             if (i !== index) return item;
+
+    //             const currentDuration = item[field as keyof typeof item] as {
+    //                 startDate: string;
+    //                 endDate: string;
+    //                 isCurrent?: boolean;
+    //             };
+
+    //             return {
+    //                 ...item,
+    //                 [field]: {
+    //                     ...currentDuration,
+    //                     [dateField]: value
+    //                 }
+    //             };
+    //         })
+    //     }));
+    // };
 
     return (
         <div className="creator-scroll-fade relative">
@@ -284,23 +369,23 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                 <div className="flex flex-col gap-3">
                     <label className="form-label">
                         <span className="form-label-text">Name</span>
-                        <input className="form-input" name="name" type="text" value={inputData.header.name} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="name" type="text" autoComplete="on" value={inputData.header.name} onChange={handleHeaderChange}/>
                     </label>
                     <label className="form-label">
                         <span className="form-label-text">Email</span>
-                        <input className="form-input" name="email" type="email" value={inputData.header.email} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="email" type="email" autoComplete="on" value={inputData.header.email} onChange={handleHeaderChange}/>
                     </label>
                     <label className="form-label">
                         <span className="form-label-text">Phone Number</span>
-                        <input className="form-input" name="phoneNumber" type="text" value={inputData.header.phoneNumber} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="phoneNumber" id="tel" autoComplete="on" type="text" value={inputData.header.phoneNumber} onChange={handleHeaderChange}/>
                     </label>
                     <label className="form-label">
                         <span className="form-label-text">Location</span>
-                        <input className="form-input" name="location" type="text" value={inputData.header.location} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="location" type="text" autoComplete="on" value={inputData.header.location} onChange={handleHeaderChange}/>
                     </label>
                     <label className="form-label">
                         <span className="form-label-text">LinkedIn Profile (optional)</span>
-                        <input className="form-input" name="linkedin" type="text" value={inputData.header.linkedin} onChange={handleHeaderChange}/>
+                        <input className="form-input" name="linkedin" type="url" autoComplete="on" value={inputData.header.linkedin} onChange={handleHeaderChange}/>
                     </label>
                 </div>
             </div>
@@ -335,7 +420,9 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                             <input 
                                 className="form-input" 
                                 type="text" 
+                                name="location"
                                 value={experience.companyLocation}
+                                autoComplete="on" 
                                 onChange={(e) =>
                                     handleSectionArrayChange("experience", index, "companyLocation", e.target.value)
                                 }
@@ -353,13 +440,24 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                             />
                         </label>
                         <label className="form-label">
-                            <span className="form-label-text">Employment duration</span>
+                            <span className="form-label-text">Start Date</span>
                             <input 
                                 className="form-input" 
                                 type="month"
-                                value={experience.employmentDuration}
+                                value={experience.employmentDuration.startDate}
                                 onChange={(e) =>
-                                    handleSectionArrayChange("experience", index, "employmentDuration", e.target.value)
+                                    handleExperienceDurationChange(index, "startDate", e.target.value)
+                                } 
+                            />
+                        </label>
+                        <label className="form-label">
+                            <span className="form-label-text">End Date</span>
+                            <input 
+                                className="form-input" 
+                                type="month"
+                                value={experience.employmentDuration.endDate}
+                                onChange={(e) =>
+                                    handleExperienceDurationChange(index, "endDate", e.target.value)
                                 } 
                             />
                         </label>
@@ -425,7 +523,9 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                             <input
                                 className="form-input"
                                 type="text"
+                                name="location"
                                 value={education.location}
+                                autoComplete="on"
                                 onChange={(e) =>
                                     handleSectionArrayChange("education", index, "location", e.target.value)
                                 }
@@ -457,13 +557,40 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                             />
                         </label>
                         <label className="form-label">
-                            <span className="form-label-text">Graduation Date</span>
+                            <span className="form-label-text">Start Date</span>
                             <input
                                 className="form-input"
                                 type="month"
-                                value={education.graduationDate}
+                                value={education.graduationDate.startDate}
                                 onChange={(e) =>
-                                    handleSectionArrayChange("education", index, "graduationDate", e.target.value)
+                                    handleEducationDurationChange(index, "startDate", e.target.value)
+                                }
+                            />
+                        </label>
+                        {!education.graduationDate.isCurrent 
+                            ? (
+                                <label className="form-label">
+                                    <span className="form-label-text">End Date</span>
+                                    <input
+                                        className="form-input"
+                                        type="month"
+                                        value={education.graduationDate.endDate}
+                                        onChange={(e) =>
+                                            handleEducationDurationChange(index, "endDate", e.target.value)
+                                        }
+                                    />
+                                </label>
+                            )
+                            : undefined
+                        }
+                        <label className="form-label">
+                            <span className="form-label-text">Still studying?</span>
+                            <input
+                                className=""
+                                type="checkbox"
+                                checked={education.graduationDate.isCurrent}
+                                onChange={(e) =>
+                                    handleEducationDurationChange(index, "isCurrent", e.target.checked)
                                 }
                             />
                         </label>
