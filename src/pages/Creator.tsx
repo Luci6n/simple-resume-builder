@@ -490,11 +490,11 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                                 handleExperienceProjectsNestedArrayChange("experience", index, "description", descIndex, e.target.value)
                                             } 
                                         />
-                                        <button 
+                                        {/* <button 
                                             className="transition-colors hover:text-red-500 hover:-translate-y-0.5"
                                         >
                                             <TrashIcon size={32} />
-                                        </button>
+                                        </button> */}
                                     </li>
                                 ))}
                                 <li className="flex items-center gap-2">
