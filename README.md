@@ -55,8 +55,9 @@ After fill up all the information, you may click on the "Save as PDF" button to 
 - [ ] improve dark mode styling
 - [ ] AI assisted in generating content of resume
 
-## Contribution
-Any contribution is welcome, just create a pull request, and I will go and take a look on it from time to time (probably)
+## Contribution / Issue
+Any contribution is welcome, just create a pull request, and I will go and take a look on it from time to time (probably) <br>
+And any bugs spotted you are so welcome to create an issue
 
 ## License
 [MIT](./LICENSE)
