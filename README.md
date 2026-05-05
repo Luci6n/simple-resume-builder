@@ -50,8 +50,8 @@ bun dev
 After fill up all the information, you may click on the "Save as PDF" button to take a look on your freshly newborn resume.
 
 ## To-do in future
+- [X] include delete/remove functionality
 - [ ] refactoring code (since now just everything in one big component lol)
-- [ ] include delete/remove functionality
 - [ ] improve dark mode styling
 - [ ] AI assisted in generating content of resume
 
