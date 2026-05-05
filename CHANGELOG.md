@@ -25,3 +25,11 @@
 - Fixed date formatting in the resume preview.
 - Fixed dark mode behavior so it does not automatically follow the system theme.
 - Temporarily disabled delete buttons until the remove behavior is ready.
+
+## [0.2.0] - 2026-05-05
+
+### Added 
+- Deleting wrongly added field is available now yay
+
+### Changed
+- Improved padding of some input field so looks more aligned

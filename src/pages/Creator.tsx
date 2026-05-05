@@ -1,5 +1,5 @@
 import type { CreatorProps, ArraySection, ResumeData } from "../types/common";
-// import { TrashIcon } from "@phosphor-icons/react/dist/csr/Trash";
+import { TrashIcon } from "@phosphor-icons/react/dist/csr/Trash";
 
 export default function Creator({ inputData, setInputData }: CreatorProps) {
     // handler functiion for updating information in header section
@@ -131,7 +131,6 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
         }))
     }
 
-    
     // generic function to add new items to array sections 
     // (experience, education, projects, skills, awardsCertification, extracurricularActivities, languages)
     const handleAddArrayItem = <Section extends ArraySection>(
@@ -184,6 +183,35 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             })
         }));
     }
+
+    const handleDeleteArrayItem = <Section extends ArraySection | "extracurricularActivities">(
+        section: Section,
+        index: number
+    ) => {
+        setInputData(prev => ({
+            ...prev,
+            [section]: prev[section]?.filter((_, i) => i !== index)
+        }));
+    };
+
+    const handleDeleteNestedArrayItem = <Section extends "experience" | "projects" | "skills">(
+        section: Section,
+        itemIndex: number,
+        field: Section extends "skills" ? "skillName" : "description",
+        valueIndex: number
+    ) => {
+        setInputData(prev => ({
+            ...prev,
+            [section]: prev[section].map((item, i) => {
+                if (i !== itemIndex) return item;
+                const currentValues = item[field as keyof typeof item] as string[];
+                return {
+                    ...item,
+                    [field]: currentValues.filter((_, j) => j !== valueIndex)
+                };
+            })
+        }));
+    };
 
     // helper functions to create empty items for each array section when adding new items
     const createEmptyExperience = (): ResumeData["experience"][number] => ({
@@ -489,11 +517,12 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                                 handleExperienceProjectsNestedArrayChange("experience", index, "description", descIndex, e.target.value)
                                             } 
                                         />
-                                        {/* <button 
+                                        <button 
                                             className="transition-colors hover:text-red-500 hover:-translate-y-0.5"
+                                            onClick={() => handleDeleteNestedArrayItem("experience", index, "description", descIndex)}
                                         >
-                                            <TrashIcon size={32} />
-                                        </button> */}
+                                            <TrashIcon size={24} />
+                                        </button>
                                     </li>
                                 ))}
                                 <li className="flex items-center gap-2">
@@ -508,6 +537,12 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 </li>
                             </ul>
                         </div>
+                        <button 
+                            className="creator-page-button my-0 mb-3 flex items-center justify-center transition-colors hover:text-red-600"
+                            onClick={() => handleDeleteArrayItem("experience", index)}
+                        >
+                            <span>Delete Experience?</span>
+                        </button>
                     </div>
                 ))}
                 <button 
@@ -520,7 +555,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             <div className="pb-5">
                 <h1 className="section-header">Education</h1>
                 {inputData.education.map((education, index) => (
-                    <div key={index} className="education flex flex-col gap-3 pb-5">
+                    <div key={index} className="education flex flex-col gap-3 pb-3">
                         <label className="form-label">
                             <span className="form-label-text">Institution Name</span>
                             <input
@@ -612,6 +647,12 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 }
                             />
                         </label>
+                        <button 
+                            className="creator-page-button my-0 mb-3 flex items-center justify-center transition-colors hover:text-red-600 active:text-red-600 focus-visible:text-red-600"
+                            onClick={() => handleDeleteArrayItem("experience", index)}
+                        >
+                            <span>Delete Education?</span>
+                        </button>
                     </div>
                 ))}
                 <button
@@ -624,7 +665,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             <div className="pb-5">                
                 <h1 className="section-header">Projects</h1>
                 {inputData.projects.map((project, index) => (
-                    <div key={index} className="projects flex flex-col gap-3">
+                    <div key={index} className="projects flex flex-col gap-3 pb-3">
                         <label className="form-label">
                             <span className="form-label-text">Project Title</span>
                             <input
@@ -650,13 +691,19 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                                 handleExperienceProjectsNestedArrayChange("projects", index, "description", descIndex, e.target.value)
                                             }
                                         />
+                                        <button 
+                                            className="transition-colors hover:text-red-500 hover:-translate-y-0.5"
+                                            onClick={() => handleDeleteNestedArrayItem("projects", index, "description", descIndex)}
+                                        >
+                                            <TrashIcon size={24} />
+                                        </button>
                                     </li>
                                 ))}
                                 <li className="flex items-center gap-2 py-1">
                                     <span className="shrink-0">{'\u2022'}</span>
                                     <button
                                         type="button"
-                                        className="creator-page-button"
+                                        className="creator-page-button mt-0"
                                         onClick={() => handleAddNestedArrayItem("projects", index, "description", "")}
                                     >
                                         +
@@ -664,10 +711,16 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 </li>
                             </ul>
                         </div>
+                        <button 
+                            className="creator-page-button my-0 mb-3 flex items-center justify-center transition-colors hover:text-red-600"
+                            onClick={() => handleDeleteArrayItem("projects", index)}
+                        >
+                            <span>Delete Project?</span>
+                        </button>
                     </div>
                 ))}
                 <button
-                    className="creator-page-button"
+                    className="creator-page-button mt-0"
                     onClick={() => handleAddArrayItem("projects", createEmptyProject())}
                 >
                     Add Project
@@ -676,7 +729,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             <div className="pb-5">                
                 <h1 className="section-header">Technical Skills</h1>
                 {inputData.skills.map((skill, index) => (
-                    <div key={index} className="skills flex flex-col gap-3">
+                    <div key={index} className="skills flex flex-col gap-3 pb-3">
                         <label className="form-label">
                             <span className="form-label-text">Skill Category</span>
                             <input
@@ -703,13 +756,19 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                                 handleSkillsNestedArrayChange(index, skillIndex, e.target.value)
                                             }
                                         />
+                                        <button 
+                                            className="transition-colors hover:text-red-500 hover:-translate-y-0.5"
+                                            onClick={() => handleDeleteNestedArrayItem("skills", index, "skillName", skillIndex)}
+                                        >
+                                            <TrashIcon size={24} />
+                                        </button>
                                     </li>
                                 ))}
                                 <li className="flex items-center gap-2 py-1">
                                     <span className="shrink-0">{'\u2022'}</span>
                                     <button
                                         type="button"
-                                        className="creator-page-button"
+                                        className="creator-page-button m-0"
                                         onClick={() => handleAddNestedArrayItem("skills", index, "skillName", "")}
                                     >
                                         +
@@ -717,10 +776,16 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 </li>
                             </ul>
                         </div>
+                        <button 
+                            className="creator-page-button my-0 mb-3 flex items-center justify-center transition-colors hover:text-red-600"
+                            onClick={() => handleDeleteArrayItem("skills", index)}
+                        >
+                            <span>Delete Skill Category?</span>
+                        </button>
                     </div>
                 ))}
                 <button
-                    className="creator-page-button"
+                    className="creator-page-button mt-0"
                     onClick={() => handleAddArrayItem("skills", createEmptySkill())}
                 >
                     Add Skill Category
@@ -729,7 +794,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             <div className="pb-5">
                 <h1 className="section-header">Awards & Certifications</h1>
                 {inputData.awardsCertification.map((awardCertification, index) => (
-                    <div key={index} className="flex flex-col gap-2 pb-3">
+                    <div key={index} className="flex flex-col gap-3 pb-3">
                         <label className="flex items-center gap-2">
                             <span className="shrink-0">{'\u2022'}</span>
                             <input
@@ -741,6 +806,12 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                     handleSectionArrayChange("awardsCertification", index, "awardCertificationTitle", e.target.value)
                                 }
                             />
+                            <button 
+                                className="transition-colors hover:text-red-500 hover:-translate-y-0.5"
+                                onClick={() => handleDeleteArrayItem("awardsCertification", index)}
+                            >
+                                <TrashIcon size={24} />
+                            </button>
                         </label>
                     </div>
                 ))}
@@ -754,7 +825,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
             <div className="pb-5">
                 <h1 className="section-header">Extracurricular Activities (optional)</h1>
                 {inputData.extracurricularActivities?.map((activity, index) => (
-                    <div key={index} className="flex flex-col gap-2 pb-3">
+                    <div key={index} className="flex flex-col gap-3 pb-3">
                         <label className="flex items-center gap-2">
                             <span className="shrink-0">{'\u2022'}</span>
                             <input
@@ -766,6 +837,12 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                     handleSectionArrayChange("extracurricularActivities", index, "activityName", e.target.value)
                                 }
                             />
+                            <button 
+                                className="transition-colors hover:text-red-500 hover:-translate-y-0.5"
+                                onClick={() => handleDeleteArrayItem("extracurricularActivities", index)}
+                            >
+                                <TrashIcon size={24} />
+                            </button>
                         </label>
                     </div>
                 ))}
@@ -802,10 +879,16 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
                                 }
                             />
                         </label>
+                        <button 
+                            className="creator-page-button my-0 mb-3 flex items-center justify-center transition-colors hover:text-red-600"
+                            onClick={() => handleDeleteArrayItem("languages", index)}
+                        >
+                            <span>Delete Language?</span>
+                        </button>
                     </div>
                 ))}
                 <button
-                    className="creator-page-button"
+                    className="creator-page-button mt-0"
                     onClick={() => handleAddArrayItem("languages", createEmptyLanguage())}
                 >
                     Add Language
