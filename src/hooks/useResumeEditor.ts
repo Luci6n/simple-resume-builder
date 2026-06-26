@@ -1,6 +1,13 @@
 import { useMemo } from "react";
 import type { Dispatch, SetStateAction } from "react";
-import type { ResumeData } from "../types/common";
+import type { ResumeCustomSection, ResumeData, ResumeSectionId } from "../types/common";
+import {
+  addCustomSection,
+  deleteCustomSection,
+  moveSection,
+  reorderSections,
+  updateCustomSection,
+} from "../utils/sectionLayout";
 import {
   addArrayItem,
   addNestedArrayItem,
@@ -66,6 +73,14 @@ export type ResumeEditorActions = {
     dateField: Key,
     value: DateDurationValue<Key>,
   ) => void;
+  moveSection: (sectionId: ResumeSectionId, offset: number) => void;
+  reorderSections: (fromSectionId: ResumeSectionId, toSectionId: ResumeSectionId) => void;
+  addCustomSection: () => void;
+  updateCustomSection: (
+    sectionId: ResumeCustomSection["id"],
+    patch: Partial<Omit<ResumeCustomSection, "id">>,
+  ) => void;
+  deleteCustomSection: (sectionId: ResumeCustomSection["id"]) => void;
 };
 
 export const useResumeEditor = (
@@ -105,6 +120,21 @@ export const useResumeEditor = (
         setInputData((current) =>
           updateDateDuration(current, section, index, field, dateField, value),
         );
+      },
+      moveSection: (sectionId, offset) => {
+        setInputData((current) => moveSection(current, sectionId, offset));
+      },
+      reorderSections: (fromSectionId, toSectionId) => {
+        setInputData((current) => reorderSections(current, fromSectionId, toSectionId));
+      },
+      addCustomSection: () => {
+        setInputData((current) => addCustomSection(current));
+      },
+      updateCustomSection: (sectionId, patch) => {
+        setInputData((current) => updateCustomSection(current, sectionId, patch));
+      },
+      deleteCustomSection: (sectionId) => {
+        setInputData((current) => deleteCustomSection(current, sectionId));
       },
     }),
     [setInputData],

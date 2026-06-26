@@ -3,18 +3,25 @@ import Preview from "./pages/Preview.tsx"
 import { useEffect, useState } from "react"
 import type { ResumeData } from "./types/common.ts";
 import { sampleData } from "./data/resumeData.ts";
+import { normalizeResumeData } from "./utils/sectionLayout.ts";
 import { resolveInitialTheme, setStoredTheme } from "./utils/theme.ts";
 
 function App() {
   const [inputData, setInputData] = useState<ResumeData>(() => {
-    const savedData = localStorage.getItem("resumeData");
+    let savedData: string | null;
+
+    try {
+      savedData = localStorage.getItem("resumeData");
+    } catch {
+      savedData = null;
+    }
 
     if(savedData) {
       try {
         const parsedData = JSON.parse(savedData) as ResumeData;
 
         if(parsedData && typeof parsedData === "object" && "header" in parsedData) {
-          return parsedData;
+          return normalizeResumeData(parsedData);
         }
 
         console.warn("Saved resume data is invalid. Using default data.");
@@ -23,7 +30,7 @@ function App() {
       }
     }
 
-    return sampleData;
+    return normalizeResumeData(sampleData);
     // To start with an empty form instead, import blankData and return it here.
   });
   const [isReverseToggled, setIsReverseToggled] = useState(false)
@@ -34,7 +41,11 @@ function App() {
   },[isDarkMode])
 
   useEffect(() => {
-    localStorage.setItem("resumeData", JSON.stringify(inputData));
+    try {
+      localStorage.setItem("resumeData", JSON.stringify(inputData));
+    } catch {
+      console.warn("Resume data could not be saved to local storage.");
+    }
   }, [inputData])
   
   const toggleDarkMode = () => {
@@ -68,24 +79,28 @@ function App() {
             </button>
           </section>
         </section>
-        <section className="w-full overflow-x-auto pb-8">
-          <div className={`mx-auto grid min-w-370 max-w-370 ${isReverseToggled ? "grid-cols-[210mm_minmax(360px,520px)]" : "grid-cols-[minmax(360px,520px)_210mm]"} items-center justify-center gap-16`}>
+        <section className="w-full overflow-x-auto px-4 pb-8">
+          <div className={`mx-auto grid w-full max-w-370 grid-cols-1 ${isReverseToggled ? "xl:grid-cols-[210mm_minmax(360px,520px)]" : "xl:grid-cols-[minmax(360px,520px)_210mm]"} items-start justify-center gap-10 xl:gap-16`}>
             {isReverseToggled ? (
               <>
-                <div className="resume-print-area w-[210mm]">
-                  <Preview inputData={inputData}/>
+                <div className="w-full overflow-x-auto">
+                  <div className="resume-print-area w-[210mm]">
+                    <Preview inputData={inputData}/>
+                  </div>
                 </div>
-                <div className="max-h-500">
+                <div className="mx-auto w-full max-w-[520px] xl:max-h-500">
                   <Creator inputData={inputData} setInputData={setInputData} />
                 </div>
               </>
             ) : (
               <>
-                <div className="max-h-500">
+                <div className="mx-auto w-full max-w-[520px] xl:max-h-500">
                   <Creator inputData={inputData} setInputData={setInputData} />
                 </div>
-                <div className="resume-print-area w-[210mm]">
-                  <Preview inputData={inputData}/>
+                <div className="w-full overflow-x-auto">
+                  <div className="resume-print-area w-[210mm]">
+                    <Preview inputData={inputData}/>
+                  </div>
                 </div>
               </>
             )}
