@@ -56,8 +56,8 @@ After fill up all the information, you may click on the "Save as PDF" button to 
 ## To-do in future
 - [X] include delete/remove functionality
 - [X] refactoring code (since now just everything in one big component lol)
-- [ ] improve dark mode styling
-- [ ] Section modification, draggable to reorder, adding new section
+- [X] improve dark mode styling
+- [X] Section modification, draggable to reorder, adding new section
 - [ ] AI assisted in generating content of resume
 
 ## Contribution / Issue
