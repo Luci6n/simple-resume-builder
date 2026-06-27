@@ -15,6 +15,18 @@ export type ArraySection =
     | "awardsCertification"
     | "languages";
 
+export type BuiltInSectionId =
+    "summary"
+    | "experience"
+    | "education"
+    | "projects"
+    | "skills"
+    | "awardsCertification"
+    | "extracurricularActivities"
+    | "languages";
+
+export type ResumeSectionId = BuiltInSectionId | `custom-${string}`;
+
 interface DateDuration {
     startDate: string;
     endDate: string;
@@ -68,9 +80,16 @@ interface ResumeLanguage {
     proficiencyLevel: string;
 }
 
+export interface ResumeCustomSection {
+    id: `custom-${string}`;
+    title: string;
+    items: string[];
+}
+
 export interface ResumeData {
     header: ResumeHeader;
     summary?: string;
+    sectionOrder?: ResumeSectionId[];
     experience: ResumeExperience[];
     education: ResumeEducation[];
     projects: ResumeProject[];
@@ -78,4 +97,5 @@ export interface ResumeData {
     awardsCertification: ResumeAwardCertification[];
     extracurricularActivities?: ResumeExtracurricularActivity[];
     languages: ResumeLanguage[];
+    customSections?: ResumeCustomSection[];
 }

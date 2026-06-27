@@ -70,6 +70,15 @@
   .section-header {
     @apply text-3xl text-shadow-lg pb-2 text-soft-black dark:text-soft-milk;
   }
+
+  .section-manager-row {
+    @apply flex min-h-11 items-center gap-2 rounded-md border border-current/10 bg-white/70 px-3 py-2 text-soft-black shadow-sm transition-[background-color,border-color,transform] hover:-translate-y-0.5 hover:border-current/30 dark:bg-night-panel dark:text-soft-milk dark:border-night-border dark:hover:border-blue-300/50;
+  }
+
+  .icon-button {
+    @apply grid h-8 w-8 place-items-center rounded-md border border-current/10 bg-white/70 text-soft-black transition-[background-color,border-color,transform] hover:-translate-y-0.5 hover:border-current/40 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 dark:bg-[#232834] dark:text-soft-milk dark:border-night-border dark:hover:border-blue-300/50;
+  }
+
   .form-input {
     @apply bg-white dark:bg-soft-black text-[#525865] dark:text-soft-milk rounded-sm border border-[#d1d1d1] dark:border-[#3a3a3a] text-[1em] leading-[1.45] outline-none p-1 px-3 transition-[box-shadow,border-color] duration-180 ease-out;
     font: inherit;
