@@ -15,7 +15,7 @@ A simple resume builder designed to help create an ATS-friendly resume without a
 │   ├── react.svg
 │   └── vite.svg
 ├── components
-│   ├── form
+│   ├── creator
 │   └── preview
 │       ├── Education.tsx
 │       ├── Experience.tsx
@@ -24,9 +24,13 @@ A simple resume builder designed to help create an ATS-friendly resume without a
 │       └── Summary.tsx
 ├── data
 │   └── resumeData.ts
+├── hooks
+│   └── useResumeEditor.ts
 ├── pages
 │   ├── Creator.tsx
 │   └── Preview.tsx
+├── utils
+│   └── resumeEditor.ts
 ├── types
 │   └── common.ts
 ├── App.css
@@ -51,7 +55,7 @@ After fill up all the information, you may click on the "Save as PDF" button to 
 
 ## To-do in future
 - [X] include delete/remove functionality
-- [ ] refactoring code (since now just everything in one big component lol)
+- [X] refactoring code (since now just everything in one big component lol)
 - [ ] improve dark mode styling
 - [ ] Section modification, draggable to reorder, adding new section
 - [ ] AI assisted in generating content of resume
