@@ -58,7 +58,7 @@ After fill up all the information, you may click on the "Save as PDF" button to 
 - [X] refactoring code (since now just everything in one big component lol)
 - [X] improve dark mode styling
 - [X] Section modification, draggable to reorder, adding new section
-- [ ] AI assisted in generating content of resume
+- [X] AI assisted in generating content of resume
 
 ## Contribution / Issue
 Any contribution is welcome, just create a pull request, and I will go and take a look on it from time to time (probably) <br>
