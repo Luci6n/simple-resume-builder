@@ -1,5 +1,6 @@
 import { ActivitiesSection } from "../components/creator/ActivitiesSection";
 import { AwardsSection } from "../components/creator/AwardsSection";
+import { ContentAssistSection } from "../components/creator/ContentAssistSection";
 import { EducationSection } from "../components/creator/EducationSection";
 import { ExperienceSection } from "../components/creator/ExperienceSection";
 import { HeaderSection } from "../components/creator/HeaderSection";
@@ -20,6 +21,7 @@ export default function Creator({ inputData, setInputData }: CreatorProps) {
         <HeaderSection header={inputData.header} actions={actions} />
         <SectionManager inputData={inputData} actions={actions} />
         <SummarySection summary={inputData.summary} actions={actions} />
+        <ContentAssistSection inputData={inputData} actions={actions} />
         <ExperienceSection experience={inputData.experience} actions={actions} />
         <EducationSection education={inputData.education} actions={actions} />
         <ProjectsSection projects={inputData.projects} actions={actions} />
